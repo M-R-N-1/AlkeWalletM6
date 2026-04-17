@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.AlkeWalletM5." parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Fondo de la barra -->
+        <item name="colorPrimary">@color/alke</item>
+
+        <!-- Color de la barra (status bar opcional) -->
+        <item name="colorPrimaryDark">@color/alke</item>
+
+        <!-- Color del texto del título -->
+        <item name="titleTextColor">#FFFFFF</item>
+
+    </style>
+</resources>
