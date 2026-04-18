@@ -11,10 +11,12 @@
 # 2. Estructura del Código
 * El proyecto está organizado por paquetes para mantener la cohesión:
   * data/: Contiene todo lo relacionado con el origen de los datos.
-  * data/local/: Implementación de Room (Entidades, DAOs, Database).
+  * data/local/: Implementación de Room (Entidades, DAOs, Database y Entities).
   * data/repository/: Clases que deciden si obtener datos de la red o de la caché
-  * utils/: Implementación de Retrofit (Servicios API, Modelos de respuesta).
-  * local.ui/: Contiene las Activities, Fragments, Adapters y los ViewModels correspondientes.
+  * data/api: Implementación de Retrofit (Servicios API, Modelos de respuesta).
+  * model/: Contiene los modelos de implementación para el registro de usuarios y las transacciones que inciden en el saldo
+  * viewModel/: Es la implementación concreta del ViewModel que conecta la base de datos local (Room) y el servicio externo (Retrofit) con la interfaz de usuario.
+  * Además contiene las Activities que garantizan la ejecución de la app para el usuario con respecto a las transacciones, logeo de usuario, home de inicio con   opciones de envío, depósito y cierre de sesión.
     
 # 3. Gestión de Datos
 * A. Almacenamiento Local (Room)
@@ -53,3 +55,12 @@
   mediante el sistema de archivos privado de la app.
 * Escalabilidad: Al separar las fuentes de datos en un repositorio, la aplicación puede funcionar en "Modo Offline" mostrando los últimos datos guardados en Room
   si la API no está disponible.
+
+# 6. Estrategia de Pruebas (Testing)
+* Para garantizar la robustez del sistema, se ha implementado una estrategia de pruebas dividida en tres pilares fundamentales, asegurando la integridad de los datos y el comportamiento de la interfaz.
+* Pruebas Unitarias en el ViewModel: El objetivo es validar la lógica de presentación y el manejo de estados de la UI sin depender del sistema operativo Android.
+* Pruebas de Persistencia (Room Database): Se realizan pruebas sobre los DAOs para validar que la comunicación con SQLite sea exacta.
+  * Integridad de Datos: Verificación de operaciones CRUD (Crear, Leer, Actualizar, Borrar) para transacciones y datos de usuario.
+* Pruebas de Integración (Retrofit): Estas pruebas garantizan que el contrato de comunicación con el servidor externo se cumpla rigurosamente.
+  * Validación de Endpoints: Se comprueba que las solicitudes HTTP se realicen con los parámetros y encabezados de autenticación correctos.
+  * Manejo de Respuestas: Simulación de diversos escenarios del servidor (respuestas exitosas, errores de cliente o errores de servidor).
